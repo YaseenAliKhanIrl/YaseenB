@@ -1,0 +1,100 @@
+<%- include partials/header.ejs %>
+
+<!DOCTYPE html>
+<html lang="en"> 
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFunds App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include any other CSS files here -->
+</head>
+
+<body onload="connectMetamask(),connectContract()">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.2.7-rc.0/web3.min.js"></script>
+
+    <div class="jumbotron" style="background-color: skyblue; position: relative; background-color: rgba(0, 0, 0, 0.816);">
+        <div class="container">
+            <h1 class="display-4" style="color: rgb(255, 255, 255);"><strong>SmartFunds App</strong></h1>
+            <p class="lead" style="color: rgb(255, 255, 255);"><strong><em>Donate to Charity & Social Welfare</em></strong></p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/1200px-MetaMask_Fox.svg.png" alt="MetaMask Logo" style="width: 100px; height: 100px;">
+            <h2 class="mt-3">Connected to MetaMask</h2>
+            <p id="userArea" class="mt-3 text-muted">Status: Not connected to MetaMask</p>
+            <p id="contractArea">Status: Not connected to Contract</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1527788263495-3518a5c1c42d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGRvbmF0aW9ufGVufDB8fDB8fHww" class="card-img-top" alt="Transfer to friends">
+                    <div class="card-body">
+                      <button onclick="depositContract()">Donate Now</button><br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1710093072218-0024b8391475?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="SmartFunds App Image">
+                    <div class="card-body">
+                      <button onclick="depositContract()">Donate Now</button><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="container">
+  <form action="/" method="post">
+    <div class="form-group">
+      <label for="name">Connect your MetaMask Wallet.</label>
+      
+    </div>
+    <button type="Click" class="btn btn-success">Click Here</button>
+  </form> -->
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      let account;
+  
+    const connectMetamask = async () => {
+        if(window.ethereum !== "underfined"){
+            const accounts = await ethereum.request({method: "eth_requestAccounts"});
+            account = accounts[0];
+            document.getElementById("userArea").innerHTML = `User Account: ${account}`;
+        }
+    }
+    
+      const connectContract = async () => {
+                const ABI =[
+	{
+		"inputs": [],
+		"name": "deposit",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	}
+]
+    
+      const Address = "0x07A33ABB12Af2FbB2aF1F69B8533ada0eE75eBd2"; // Taking Address from Remix
+                window.web3 = await new Web3(window.ethereum);
+                window.contract = await new window.web3.eth.Contract(ABI, Address);
+                document.getElementById("contractArea").innerHTML = "Connected to Contract"; // calling the elementID above
+            }
+     
+    const depositContract = async () => {
+                // const amount = document.getElementById("depositInput").value;
+                await window.contract.methods.deposit().send({from: account, value: 1});
+            }
+    </script>
+    
+</body>
+
+</html>
+<%- include partials/footer.ejs %>
