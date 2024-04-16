@@ -1,1 +1,208 @@
+<!-- <%- include partials/header.ejs %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form</title>
+</head>
+
+
+<div class="container">
+<h2>Registration Form</h2>
+<div class="form-group">
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" required>
+</div>
+</form>
+</div>
+<div style="text-align: center;">
+<button class="btn btn-success" onclick="addEmail()">Submit</button>
+<button class="btn btn-success" onclick="getEmail()">Get Email</button>
+</div>
+<div id="showEmail" style="text-align: center;"></div>
+
+<script>
+    let account;
+    const connectMetamask = async () => {
+        if(window.ethereum !== "undefined") {
+            const accounts = await ethereum.request({method: "eth_requestAccounts"});
+            account = accounts[0];
+            document.getElementById("userArea").innerHTML = `User Account: ${account}`;
+        }
+    }
+    const connectContract = async () => {
+        const ABI =[
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "setName",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getName",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "retName",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "user",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+// Enter your contract's ABI here
+        const Address = "0x4F60B157B119B92B0c98973862b7219e1B140207"; 
+        window.web3 = await new Web3(window.ethereum);
+        window.contract = await new window.web3.eth.Contract(ABI, Address);
+        document.getElementById("contractArea").innerHTML = "Connected to Contract";
+    }
+    const addEmail = async () => {
+    const email = document.getElementById("email").value;
+    await window.contract.methods.setEmail(email).send({ from: account });
+    }
+    const getEmail = async () => {
+    const email = await window.contract.methods.getEmail().call();
+    document.getElementById("showEmail").innerHTML = `Contract Account: ${email}`;
+    }
+
+
+
+</script>
+</body>
+</html> -->
+
 <%- include partials/header.ejs %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form</title>
+ 
+</head>
+ 
+     
+     
+ 
+<div class="container">
+    <h2>Details</h2>
+   
+        <div class="form-group">
+            <label for="email">Name</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+   
+    </form>
+</div>
+<div style="text-align: center;">
+    <button class="btn btn-success" onclick="addEmail()">Submit</button>
+    <button class="btn btn-success" onclick="getEmail()">Name</button>
+  </div>
+  <div id="showEmail" style="text-align: center;"></div>
+ 
+ 
+<script>
+   
+    let account;
+    const connectMetamask = async () => {
+        if(window.ethereum !== "undefined") {
+            const accounts = await ethereum.request({method: "eth_requestAccounts"});
+            account = accounts[0];
+            document.getElementById("userArea").innerHTML = `User Account: ${account}`;
+        }
+    }
+ 
+    const connectContract = async () => {
+        const ABI =[
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "_email",
+                "type": "string"
+            }
+        ],
+        "name": "setEmail",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "email",
+        "outputs": [
+            {
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getEmail",
+        "outputs": [
+            {
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    }
+];
+ 
+        const Address = "0xD4D1B7b3945058424a974E028C36e510Db7920A3"; 
+        window.web3 = await new Web3(window.ethereum);
+        window.contract = await new window.web3.eth.Contract(ABI, Address);
+        document.getElementById("contractArea").innerHTML = "Connected to Contract";
+    }
+   
+    const addEmail = async () => {
+    const email = document.getElementById("email").value;
+    await window.contract.methods.setEmail(email).send({ from: account });
+    }
+ 
+    const getEmail = async () => {
+    const email = await window.contract.methods.getEmail().call();
+    document.getElementById("showEmail").innerHTML = `Contract Account: ${email}`;
+    }
+ 
+ 
+ 
+ 
+ 
+   
+</script>
+ 
+</body>
+</html>

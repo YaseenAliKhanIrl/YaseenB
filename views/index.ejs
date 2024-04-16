@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartFunds App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Include any other CSS files here -->
+    
 </head>
 
 <body onload="connectMetamask(),connectContract()">
@@ -47,15 +47,6 @@
             </div>
         </div>
     </div>
-
-    <!-- <div class="container">
-  <form action="/" method="post">
-    <div class="form-group">
-      <label for="name">Connect your MetaMask Wallet.</label>
-      
-    </div>
-    <button type="Click" class="btn btn-success">Click Here</button>
-  </form> -->
     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
@@ -82,19 +73,19 @@
 	}
 ]
     
-      const Address = "0x07A33ABB12Af2FbB2aF1F69B8533ada0eE75eBd2"; // Taking Address from Remix
+      const Address = "0x07A33ABB12Af2FbB2aF1F69B8533ada0eE75eBd2"; 
                 window.web3 = await new Web3(window.ethereum);
                 window.contract = await new window.web3.eth.Contract(ABI, Address);
-                document.getElementById("contractArea").innerHTML = "Connected to Contract"; // calling the elementID above
+                document.getElementById("contractArea").innerHTML = "Connected to Contract"; 
             }
      
     const depositContract = async () => {
-                // const amount = document.getElementById("depositInput").value;
+                
                 await window.contract.methods.deposit().send({from: account, value: 1});
             }
     </script>
     
 </body>
 
-</html>
+</html> 
 <%- include partials/footer.ejs %>
